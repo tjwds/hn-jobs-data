@@ -1,0 +1,25 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+model WhosHiring {
+    id           String    @id
+    title        String?
+    createdAt    DateTime?
+    kids         Comment[]
+    fullyFetched Boolean   @default(false)
+}
+
+model Comment {
+    id           String     @id
+    content      String?
+    createdAt    DateTime?
+    parent       WhosHiring @relation(fields: [parentId], references: [id])
+    parentId     String
+    fullyFetched Boolean    @default(false)
+}
